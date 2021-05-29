@@ -25,5 +25,14 @@
 		"freeCodeCamp",
 		"express"
 	],
-	"license": "MIT"
+	"license": "MIT",
+	"devDependencies": {
+		"@babel/eslint-parser": "^7.14.4",
+		"eslint": "^7.27.0",
+		"eslint-config-standard": "^16.0.3",
+		"eslint-plugin-import": "^2.23.3",
+		"eslint-plugin-node": "^11.1.0",
+		"eslint-plugin-promise": "^5.1.0",
+		"npm": "^7.15.0"
+	}
 }
