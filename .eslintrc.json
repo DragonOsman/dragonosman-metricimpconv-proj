@@ -19,7 +19,6 @@
     "quotes": [
       "error",
       "double",
-      "always",
       {
         "templateLiterals": true
       }
