@@ -22,8 +22,8 @@ module.exports = (app) => {
         returnUnit: returnUnit,
         string: fullResultStr
       });
-    } catch (Error) {
-      console.log(Error.toString());
+    } catch (error) {
+      console.log(error.message());
     }
   });
 

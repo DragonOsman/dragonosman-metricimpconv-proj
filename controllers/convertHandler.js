@@ -3,7 +3,7 @@ function ConvertHandler() {
     if (unit.toLowerCase() !== "gal" || unit.toLowerCase() !== "kg" ||
     unit.toLowerCase() !== "mi" || unit.toLowerCase() !== "km" ||
     unit.toLowerCase() !== "L" || unit.toLowerCase() !== "lbs") {
-      throw Error("invaid unit");
+      throw new Error("invaid unit");
     }
     return true;
   }
@@ -15,14 +15,14 @@ function ConvertHandler() {
     unit.toLowerCase() !== "kg" || unit.toLowerCase() !== "mi" ||
     unit.toLowerCase() !== "km" || unit.toLowerCase() !== "L" ||
     unit.toLowerCase() !== "lbs")) {
-      throw Error("invalid number and unit");
+      throw new Error("invalid number and unit");
     }
     return true;
   }
 
   this.getNum = function(input) {
     if (Number(input) === NaN) {
-      throw Error("invalid number");
+      throw new Error("invalid number");
     }
 
     try {
@@ -33,8 +33,8 @@ function ConvertHandler() {
   
         return result;
       }
-    } catch (Error) {
-      console.log(Error.toString());
+    } catch (error) {
+      console.log(error.message());
     }
   };
 
@@ -45,8 +45,8 @@ function ConvertHandler() {
       
         return unit;
       }
-    } catch (Error) {
-      console.log(Error.toString());
+    } catch (error) {
+      console.log(error.toString());
     }
   };
   
@@ -72,7 +72,7 @@ function ConvertHandler() {
         result = "gal";
         break;
       default:
-        throw Error("invalid unit");
+        throw new Error("invalid unit");
     }
     
     return result;
@@ -100,7 +100,7 @@ function ConvertHandler() {
         result = "liters";
         break;
       default:
-        throw Error("invalid unit");
+        throw new Error("invalid unit");
     }
     
     return result;
