@@ -1,17 +1,53 @@
 function ConvertHandler() {
-  
-  this.getNum = function(input) {
-    // extract number part from string containing number and metric unit
-    const [number] = input.match(/(\d+(?:.\d+)?)/);
-    const result = parseFloat(number);
+  const checkUnit = (unit) => {
+    if (unit.toLowerCase() !== "gal" || unit.toLowerCase() !== "kg" ||
+    unit.toLowerCase() !== "mi" || unit.toLowerCase() !== "km" ||
+    unit.toLowerCase() !== "L" || unit.toLowerCase() !== "lbs") {
+      throw Error("invaid unit");
+    }
+    return true;
+  }
 
-    return result;
-  };
-  
-  this.getUnit = function(input) {
+  const checkNumberAndUnit = (input) => {
     const [unit] = input.match(/([a-z]+)/i);
-    
-    return unit;
+
+    if (Number(input) === NaN && (unit.toLowerCase() !== "gal" || 
+    unit.toLowerCase() !== "kg" || unit.toLowerCase() !== "mi" ||
+    unit.toLowerCase() !== "km" || unit.toLowerCase() !== "L" ||
+    unit.toLowerCase() !== "lbs")) {
+      throw Error("invalid number and unit");
+    }
+    return true;
+  }
+
+  this.getNum = function(input) {
+    if (Number(input) === NaN) {
+      throw Error("invalid number");
+    }
+
+    try {
+      if (checkNumberAndUnit(input)) {
+        // extract number part from string containing number and metric unit
+        const [number] = input.match(/(\d+(?:.\d+)?)/);
+        const result = parseFloat(number);
+  
+        return result;
+      }
+    } catch (Error) {
+      console.log(Error.toString());
+    }
+  };
+
+  this.getUnit = function(input) {
+    try {
+      if (checkUnit(input)) {
+        const [unit] = input.match(/([a-z]+)/i);
+      
+        return unit;
+      }
+    } catch (Error) {
+      console.log(Error.toString());
+    }
   };
   
   this.getReturnUnit = function(initUnit) {

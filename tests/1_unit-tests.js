@@ -1,9 +1,9 @@
-const chai = require('chai');
+const chai = require("chai");
 let assert = chai.assert;
-const ConvertHandler = require('../controllers/convertHandler.js');
+const ConvertHandler = require("../controllers/convertHandler.js");
 
 let convertHandler = new ConvertHandler();
 
-suite('Unit Tests', function(){
-
+suite("Unit Tests", () => {
+  
 });
