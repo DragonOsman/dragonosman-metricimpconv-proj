@@ -145,9 +145,11 @@ function ConvertHandler() {
           break;
       }
 
-      result = result.toPrecision(7);
+      if (result) {
+        result = result.toPrecision(7);
     
-      return result;
+        return result;
+      }
     }
   };
   
