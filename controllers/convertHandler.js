@@ -108,9 +108,10 @@ function ConvertHandler() {
   };
   
   this.convert = function(initNum, initUnit) {
-    const input = `${initNum}${initUnit}`;
+    let input = `${initNum}${initUnit}`;
     if (input.match(/^[a-z]+$/i)) {
       initNum = 1;
+      input = `${initNum}${initUnit}`;
     }
 
     if (checkNumberAndUnit(input)) {
