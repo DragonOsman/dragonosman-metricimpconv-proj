@@ -23,7 +23,10 @@ module.exports = (app) => {
         string: fullResultStr
       });
     } catch (error) {
-      console.log(error.message());
+      console.log("routes/api.js:", error.message);
+      res.json({
+        error: error.message
+      });
     }
   });
 

@@ -53,6 +53,10 @@ suite("Unit Tests", () => {
         expect(num5).to.equal(20.3456);
         expect(num6).to.equal(40.5678);
       });
+
+      it("should correctly read a fractional input", () => {
+        
+      });
     });
   });
 });

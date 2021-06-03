@@ -1,52 +1,53 @@
 function ConvertHandler() {
   const checkUnit = (unit) => {
-    if (unit.toLowerCase() !== "gal" || unit.toLowerCase() !== "kg" ||
-    unit.toLowerCase() !== "mi" || unit.toLowerCase() !== "km" ||
-    unit.toLowerCase() !== "L" || unit.toLowerCase() !== "lbs") {
-      throw new Error("invaid unit");
+    if (unit.toLowerCase() !== "gal" && unit.toLowerCase() !== "kg" &&
+    unit.toLowerCase() !== "mi" && unit.toLowerCase() !== "km" &&
+    unit.toLowerCase() !== "L" && unit.toLowerCase() !== "lbs") {
+      return false;
+    }
+    return true;
+  }
+
+  const checkNumber = (input) => {
+    if (Number(input) === Number.isNaN() || /^\d+(?:(\s(\d)+)*)(?:\/\d+){2,}/.test(input)) {
+      return false;
     }
     return true;
   }
 
   const checkNumberAndUnit = (input) => {
-    const [unit] = input.match(/([a-z]+)/i);
+    if (!/^\d+/.test(input)) {
+      input = `1${input}`;
+    }
 
-    if (Number(input) === NaN && (unit.toLowerCase() !== "gal" || 
-    unit.toLowerCase() !== "kg" || unit.toLowerCase() !== "mi" ||
-    unit.toLowerCase() !== "km" || unit.toLowerCase() !== "L" ||
-    unit.toLowerCase() !== "lbs")) {
+    if (!checkNumber(input) && !checkUnit(input)) {
       throw new Error("invalid number and unit");
+    } else if (!checkNumber(input)) {
+      throw new Error("invalid number");
+    } else if (!checkUnit(input)) {
+      throw new Error("invalid unit");
     }
     return true;
   }
 
   this.getNum = function(input) {
-    if (Number(input) === NaN) {
-      throw new Error("invalid number");
-    }
+    if (/^[a-z]/i.test(input)) {
+      // We only got a unit, so the number should be 1
+      return 1;
+    } else if (checkNumber(input)) {
+      // extract number part from string containing number and unit
+      const [number] = input.match(/(\d+(?:.\d+)?)/);
+      const result = parseFloat(number);
 
-    try {
-      if (checkNumberAndUnit(input)) {
-        // extract number part from string containing number and metric unit
-        const [number] = input.match(/(\d+(?:.\d+)?)/);
-        const result = parseFloat(number);
-  
-        return result;
-      }
-    } catch (error) {
-      console.log(error.message());
+      return result;
     }
   };
 
   this.getUnit = function(input) {
-    try {
-      if (checkUnit(input)) {
-        const [unit] = input.match(/([a-z]+)/i);
-      
-        return unit;
-      }
-    } catch (error) {
-      console.log(error.toString());
+    if (checkUnit(input)) {
+      const [unit] = input.match(/([a-z]+)/i);
+    
+      return unit;
     }
   };
   
@@ -107,34 +108,41 @@ function ConvertHandler() {
   };
   
   this.convert = function(initNum, initUnit) {
-    const galToL = 3.78541;
-    const lbsToKg = 0.453592;
-    const miToKm = 1.60934;
-    let result;
-    switch (initUnit) {
-      case "gal":
-        result = initNum * galToL;
-        break;
-      case "lbs":
-        result = initNum * lbsToKg;
-        break;
-      case "mi":
-        result = initNum = miToKm;
-        break;
-      case "L":
-        result = initNum / galToL;
-        break;
-      case "kg":
-        result = initNum / lbsToKg;
-        break;
-      case "km":
-        result = initNum / miToKm;
-        break;
+    if (initNum.toString() === "") {
+      initNum = 1;
     }
 
-    result = result.toPrecision(7);
+    const input = `${initNum}${initUnit}`;
+    if (checkNumberAndUnit(input)) {
+      const galToL = 3.78541;
+      const lbsToKg = 0.453592;
+      const miToKm = 1.60934;
+      let result;
+      switch (initUnit) {
+        case "gal":
+          result = initNum * galToL;
+          break;
+        case "lbs":
+          result = initNum * lbsToKg;
+          break;
+        case "mi":
+          result = initNum = miToKm;
+          break;
+        case "L":
+          result = initNum / galToL;
+          break;
+        case "kg":
+          result = initNum / lbsToKg;
+          break;
+        case "km":
+          result = initNum / miToKm;
+          break;
+      }
+
+      result = result.toPrecision(7);
     
-    return result;
+      return result;
+    }
   };
   
   this.getString = function(initNum, initUnit, returnNum, returnUnit) {
