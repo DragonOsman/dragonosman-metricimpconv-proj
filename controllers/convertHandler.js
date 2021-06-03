@@ -85,7 +85,7 @@ function ConvertHandler() {
   this.spellOutUnit = function(unit) {
     let result;
     if (unit) {
-      switch (unit.toLowerCase()) {
+      switch (unit.toString().toLowerCase()) {
         case "mi":
           result = "miles";
           break;
