@@ -53,7 +53,7 @@ function ConvertHandler() {
   
   this.getReturnUnit = function(initUnit) {
     let result;
-    switch (initUnit) {
+    switch (initUnit.toLowerCase()) {
       case "mi":
         result = "km";
         break;
@@ -81,7 +81,7 @@ function ConvertHandler() {
 
   this.spellOutUnit = function(unit) {
     let result;
-    switch (unit) {
+    switch (unit.toLowerCase()) {
       case "mi":
         result = "miles";
         break;
@@ -118,7 +118,7 @@ function ConvertHandler() {
       const lbsToKg = 0.453592;
       const miToKm = 1.60934;
       let result;
-      switch (initUnit) {
+      switch (initUnit.toLowerCase()) {
         case "gal":
           result = initNum * galToL;
           break;
