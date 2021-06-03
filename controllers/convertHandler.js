@@ -23,9 +23,13 @@ function ConvertHandler() {
     const [unit] = input.match(/([a-z]+)/i);
     if (!checkNumber(input) && !checkUnit(unit)) {
       return new Error("invalid number and unit");
-    } else if (!checkNumber(input)) {
+    } 
+    
+    if (!checkNumber(input)) {
       return new Error("invalid number");
-    } else if (!checkUnit(unit)) {
+    }
+    
+    if (!checkUnit(unit)) {
       return new Error("invalid unit");
     }
     return true;
@@ -49,7 +53,7 @@ function ConvertHandler() {
     if (checkUnit(unit)) {
       return unit;
     }
-    return new Error("invalid unit");
+    throw new Error("invalid unit");
   };
   
   this.getReturnUnit = function(initUnit) {
@@ -75,7 +79,7 @@ function ConvertHandler() {
           result = "gal";
           break;
         default:
-          return new Error("invalid unit");
+          throw new Error("invalid unit");
       }
       
       return result;
@@ -105,7 +109,7 @@ function ConvertHandler() {
           result = "liters";
           break;
         default:
-          return new Error("invalid unit");
+          throw new Error("invalid unit");
       }
       
       return result;
