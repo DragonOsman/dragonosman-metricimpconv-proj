@@ -20,11 +20,12 @@ function ConvertHandler() {
       input = `1${input}`;
     }
 
-    if (!checkNumber(input) && !checkUnit(input)) {
+    const [unit] = input.match(/([a-z]+)/i);
+    if (!checkNumber(input) && !checkUnit(unit)) {
       throw new Error("invalid number and unit");
     } else if (!checkNumber(input)) {
       throw new Error("invalid number");
-    } else if (!checkUnit(input)) {
+    } else if (!checkUnit(unit)) {
       throw new Error("invalid unit");
     }
     return true;
@@ -44,9 +45,8 @@ function ConvertHandler() {
   };
 
   this.getUnit = function(input) {
-    if (checkUnit(input)) {
-      const [unit] = input.match(/([a-z]+)/i);
-    
+    const [unit] = input.match(/([a-z]+)/i);
+    if (checkUnit(unit)) {
       return unit;
     }
   };
