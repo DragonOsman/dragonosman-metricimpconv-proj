@@ -108,11 +108,11 @@ function ConvertHandler() {
   };
   
   this.convert = function(initNum, initUnit) {
-    if (initNum.toString() === "") {
+    const input = `${initNum}${initUnit}`;
+    if (input.match(/^[a-z]+$/i)) {
       initNum = 1;
     }
 
-    const input = `${initNum}${initUnit}`;
     if (checkNumberAndUnit(input)) {
       const galToL = 3.78541;
       const lbsToKg = 0.453592;
