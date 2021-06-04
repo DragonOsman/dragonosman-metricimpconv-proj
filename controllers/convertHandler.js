@@ -8,8 +8,8 @@ function ConvertHandler() {
     return true;
   }
 
-  const checkNumber = (input) => {
-    if (Number(input) === Number.isNaN() || /^\d+(?:(\s(\d)+)*)(?:\/\d+){2,}/.test(input)) {
+  const checkNumber = (number) => {
+    if (Number(number) === Number.isNaN() || /^\d+(?:(\s(\d)+)*)(?:\/\d+){2,}/.test(number)) {
       return false;
     }
     return true;
@@ -21,7 +21,8 @@ function ConvertHandler() {
     }
 
     const [unit] = input.match(/([a-z]+)/i);
-    if (!checkNumber(input) && !checkUnit(unit)) {
+    const [number] = input.match(/^\d+(?:(\.\d))(?:(\s(\d)+)*)(?:\/\d+){1}/);
+    if (!checkNumber(number) && !checkUnit(unit)) {
       return new Error("invalid number and unit");
     } 
     
@@ -41,10 +42,9 @@ function ConvertHandler() {
       return 1;
     } else if (checkNumber(input)) {
       // extract number part from string containing number and unit
-      const [number] = input.match(/(\d+(?:.\d+)?)/);
-      const result = parseFloat(number);
+      const [number] = input.match(/(\d+(?:.\d+)?)(?:(\s(\d)+)*)(?:\/\d+){1}/);
 
-      return result;
+      return number;
     }
   };
 
