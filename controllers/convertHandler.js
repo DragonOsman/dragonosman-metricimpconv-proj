@@ -46,7 +46,7 @@ function ConvertHandler() {
         const numbers = number.split(index);
         const numerator = parseFloat(numbers[0]);
         const denomenator = parseFloat(numbers[1]);
-        number = numerator / denomenator;
+        number = numerator / denominator;
       }
       return number;
     } else if (!checkNumber) {
