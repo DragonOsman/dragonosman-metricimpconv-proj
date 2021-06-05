@@ -23,15 +23,7 @@ function ConvertHandler() {
     const [unit] = input.match(/([a-z]+)/i);
     const [number] = input.match(/^\d+(?:(\.\d))(?:(\s(\d)+)*)(?:\/\d+){1}/);
     if (!checkNumber(number) && !checkUnit(unit)) {
-      return new Error("invalid number and unit");
-    } 
-    
-    if (!checkNumber(input)) {
-      return new Error("invalid number");
-    }
-    
-    if (!checkUnit(unit)) {
-      return new Error("invalid unit");
+      return false;
     }
     return true;
   }
@@ -40,11 +32,27 @@ function ConvertHandler() {
     if (/^[a-z]/i.test(input)) {
       // We only got a unit, so the number should be 1
       return 1;
-    } else if (checkNumber(input)) {
-      // extract number part from string containing number and unit
-      const [number] = input.match(/(\d+(?:.\d+)?)(?:(\s(\d)+)*)(?:\/\d+){1}/);
+    }
 
+    // extract number part from string containing number and unit
+    let [number] = input.match(/(\d+(?:.\d+)?)(?:(\s(\d)+)*)(?:\/\d+){1}/);
+
+    if (checkNumber(number)) {
+      // to check if the number is a fraction and to evaluate it if so
+      const index = number.indexOf("/");
+    
+      // -1 means not found
+      if (index !== -1) {
+        const numbers = number.split(index);
+        const numerator = parseFloat(numbers[0]);
+        const denomenator = parseFloat(numbers[1]);
+        number = numerator / denomenator;
+      }
       return number;
+    } else if (!checkNumber) {
+      throw new Error("invalid number");
+    } else if (!checkNumberAndUnit(input)) {
+      throw new Error("invalid number and unit");
     }
   };
 
@@ -117,14 +125,7 @@ function ConvertHandler() {
   };
   
   this.convert = function(initNum, initUnit) {
-    let input = `${initNum}${initUnit}`;
-    if (input.match(/^[a-z]+$/i)) {
-      initNum = 1;
-      input = `${initNum}${initUnit}`;
-    }
-
-    if (checkNumberAndUnit(input)) {
-      const galToL = 3.78541;
+    const galToL = 3.78541;
       const lbsToKg = 0.453592;
       const miToKm = 1.60934;
       let result;
@@ -149,12 +150,9 @@ function ConvertHandler() {
           break;
       }
 
-      if (result) {
-        result = result.toPrecision(7);
+      result = result.toFixed(5);
     
-        return result;
-      }
-    }
+      return result;
   };
   
   this.getString = function(initNum, initUnit, returnNum, returnUnit) {
