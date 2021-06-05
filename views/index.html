@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Metric/Imperial Converter</title>
+    <title>DragonOsman Metric/Imperial Converter</title>
     <meta name="description" content="An example of the Free Code Camp Metric/Imperial Converter Project">
     <link id="favicon" rel="icon" href="https://cdn.freecodecamp.org/universal/favicons/favicon-32x32.png" type="image/x-icon">
     <meta charset="utf-8">
@@ -11,7 +11,7 @@
   </head>
   <body>
     <header>
-      <h1>Metric/Imperial Converter</h1>
+      <h1>DragonOsman Metric/Imperial Converter</h1>
     </header>
     <hr style='margin: 50px'>
     <section>
@@ -41,15 +41,15 @@
             crossorigin="anonymous"></script>
     <script>
       $(function() {
-        $('#convertForm').submit(function(event) {
+        $("#convertForm").submit(function(event) {
           event.preventDefault();
           $.ajax({
-            url: '/api/convert',
-            type: 'get',
-            data: $('#convertForm').serialize(),
+            url: "/api/convert",
+            type: "get",
+            data: $("#convertForm").serialize(),
             success: function(data) {
-              $('#result').text(data.string || data);
-              $('#jsonResult').text(JSON.stringify(data));
+              $("#result").text(data.string || data);
+              $("#jsonResult").text(JSON.stringify(data));
             }
           });
         });
