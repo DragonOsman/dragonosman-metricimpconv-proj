@@ -45,7 +45,7 @@ function ConvertHandler() {
       if (index !== -1) {
         const numbers = number.split(index);
         const numerator = parseFloat(numbers[0]);
-        const denomenator = parseFloat(numbers[1]);
+        const denominator = parseFloat(numbers[1]);
         number = numerator / denominator;
       }
       return number;
