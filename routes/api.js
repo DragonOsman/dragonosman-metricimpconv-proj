@@ -24,9 +24,7 @@ module.exports = (app) => {
       });
     } catch (error) {
       console.log("routes/api.js:", error.message);
-      res.json({
-        error: error.message
-      });
+      res.json(error.message);
     }
   });
 
