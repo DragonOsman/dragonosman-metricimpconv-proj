@@ -9,7 +9,7 @@ function ConvertHandler() {
   }
 
   const checkNumber = (number) => {
-    if (Number(number) === Number.isNaN() || /^\d+(?:(\s(\d)+)*)(?:\/\d+){2,}/.test(number)) {
+    if (Number(number.toString()) === Number.isNaN()) {
       return false;
     }
     return true;
@@ -21,7 +21,7 @@ function ConvertHandler() {
     }
 
     const [unit] = input.match(/([a-z]+)/i);
-    const [number] = input.match(/^\d+(?:(\.\d))(?:(\s(\d)+)*)(?:\/\d+){1}/);
+    const [number] = input.match(/[^a-z]/i);
     if (!checkNumber(number) && !checkUnit(unit)) {
       return false;
     }
@@ -35,25 +35,33 @@ function ConvertHandler() {
     }
 
     // extract number part from string containing number and unit
-    let [number] = input.match(/(\d+(?:.\d+)?)(?:(\s(\d)+)*)(?:\/\d+){1}/);
+    let numberStr = input.match(/[^a-z]/i);
+    numberStr = numberStr.toString();
 
-    if (checkNumber(number)) {
-      // to check if the number is a fraction and to evaluate it if so
-      const index = number.indexOf("/");
-    
-      // -1 means not found
-      if (index !== -1) {
-        const numbers = number.split(index);
+    // to check if the number is a fraction
+    const index = numberStr.indexOf("/");
+
+    // if there's at least one / in there, check if it's the only one
+    // -1 means not found
+    if (index !== -1) {
+      if (numberStr.indexOf("/") === numberStr.lastIndexOf("/")) {
+        const numbers = numberStr.split("/");
         const numerator = parseFloat(numbers[0]);
         const denominator = parseFloat(numbers[1]);
-        number = numerator / denominator;
+        numberStr = (numerator / denominator).toString();
+      } else {
+        throw new Error("invalid number");
       }
-      return number;
-    } else if (!checkNumber) {
+    }
+
+    const number = parseFloat(numberStr);
+
+    if (!checkNumber(number)) {
       throw new Error("invalid number");
     } else if (!checkNumberAndUnit(input)) {
       throw new Error("invalid number and unit");
     }
+    return number;
   };
 
   this.getUnit = function(input) {
@@ -125,11 +133,11 @@ function ConvertHandler() {
   };
   
   this.convert = function(initNum, initUnit) {
-    const galToL = 3.78541;
-    const lbsToKg = 0.453592;
-    const miToKm = 1.60934;
-    let result;
-    if (initUnit) {
+    if (initNum && initUnit) {
+      const galToL = 3.78541;
+      const lbsToKg = 0.453592;
+      const miToKm = 1.60934;
+      let result;
       switch (initUnit.toString().toLowerCase()) {
         case "gal":
           result = initNum * galToL;
@@ -149,13 +157,13 @@ function ConvertHandler() {
         case "km":
           result = initNum / miToKm;
           break;
-        }
-  
-        if (result) {
-          result = result.toFixed(5);
-      
-          return result;
-        }
+      }
+
+      if (result) {
+        result = result.toFixed(5);
+    
+        return result;
+      }
     }
   };
   
