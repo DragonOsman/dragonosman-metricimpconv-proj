@@ -52,54 +52,49 @@ function ConvertHandler() {
       } else {
         throw new Error("invalid number");
       }
-    }
+    } else {
+      const number = parseFloat(numberStr);
 
-    const number = parseFloat(numberStr);
-
-    if (!checkNumber(number)) {
-      throw new Error("invalid number");
-    } else if (!checkNumberAndUnit(input)) {
-      throw new Error("invalid number and unit");
+      if (!checkNumber(number)) {
+        throw new Error("invalid number");
+      } else if (!checkNumberAndUnit(input)) {
+        throw new Error("invalid number and unit");
+      }
+      return number;
     }
-    return number;
   };
 
   this.getUnit = function(input) {
     const [unit] = input.match(/([a-z]+)/i);
-    if (checkUnit(unit)) {
-      return unit;
-    }
-    throw new Error("invalid unit");
+    return unit;
   };
   
   this.getReturnUnit = function(initUnit) {
     let result;
-    if (initUnit) {
-      switch (initUnit.toString().toLowerCase()) {
-        case "mi":
-          result = "km";
-          break;
-        case "gal":
-          result = "L";
-          break;
-        case "km":
-          result = "mi";
-          break;
-        case "lbs":
-          result = "kg";
-          break;
-        case "kg":
-          result = "lbs";
-          break;
-        case "L":
-          result = "gal";
-          break;
-        default:
-          throw new Error("invalid unit");
-      }
-      
-      return result;
+    switch (initUnit.toString().toLowerCase()) {
+      case "mi":
+        result = "km";
+        break;
+      case "gal":
+        result = "L";
+        break;
+      case "km":
+        result = "mi";
+        break;
+      case "lbs":
+        result = "kg";
+        break;
+      case "kg":
+        result = "lbs";
+        break;
+      case "L":
+        result = "gal";
+        break;
+      default:
+        throw new Error("invalid unit");
     }
+    
+    return result;
   };
 
   this.spellOutUnit = function(unit) {
@@ -133,8 +128,7 @@ function ConvertHandler() {
   };
   
   this.convert = function(initNum, initUnit) {
-    if (initNum && initUnit) {
-      const galToL = 3.78541;
+    const galToL = 3.78541;
       const lbsToKg = 0.453592;
       const miToKm = 1.60934;
       let result;
@@ -164,7 +158,6 @@ function ConvertHandler() {
     
         return result;
       }
-    }
   };
   
   this.getString = function(initNum, initUnit, returnNum, returnUnit) {
