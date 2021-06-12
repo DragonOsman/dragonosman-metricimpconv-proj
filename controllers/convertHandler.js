@@ -1,77 +1,80 @@
 function ConvertHandler() {
-  const checkUnit = (unit) => {
-    if (unit.toLowerCase() !== "gal" && unit.toLowerCase() !== "kg" &&
-    unit.toLowerCase() !== "mi" && unit.toLowerCase() !== "km" &&
-    unit.toLowerCase() !== "L" && unit.toLowerCase() !== "lbs") {
-      return false;
-    }
-    return true;
-  }
-
-  const checkNumber = (number) => {
-    if (Number(number.toString()) === Number.isNaN()) {
+  const checkNumber = (input) => {
+    const result = input.match(/^(?<num>\d*(\.\d+)?(\/\d+(\.\d+)?)?)(?<unit>([a-z]+))$/i);
+    if (!result) {
       return false;
     }
     return true;
   }
 
   const checkNumberAndUnit = (input) => {
-    if (!/^\d+/.test(input)) {
-      input = `1${input}`;
+    const isNumberValid = checkNumber(input);
+    if (isNumberValid) {
+      const result = input.match(/^(?<num>\d*(\.\d+)?(\/\d+(\.\d+)?)?)(?<unit>([a-z]+))$/i);
+      const unit = result.groups["unit"];
+      if (unit.toLowerCase() !== "lbs" && unit.toLowerCase() !== "gal" && unit.toLowerCase() !== "l" &&
+      unit.toLowerCase() !== "km" && unit.toLowerCase() !== "kg" && unit.toLowerCase() !== "mi") {
+        return false;
+      } else {
+        return true;
+      }
     }
-
-    const [unit] = input.match(/([a-z]+)/i);
-    const [number] = input.match(/[^a-z]/i);
-    if (!checkNumber(number) && !checkUnit(unit)) {
-      return false;
-    }
-    return true;
   }
 
   this.getNum = function(input) {
-    if (/^[a-z]/i.test(input)) {
+    if (/^(km|kg|L|gal|lbs|mi)$/i.test(input)) {
       // We only got a unit, so the number should be 1
       return 1;
     }
+    
+    if (!checkNumberAndUnit(input)) {
+      throw new Error("invalid number and unit");
+    } else if (!checkNumber(input)) {
+      throw new Error("invalid number");
+    }
 
-    // extract number part from string containing number and unit
-    let numberStr = input.match(/[^a-z]/i);
-    numberStr = numberStr.toString();
+    let number = 0;
+    const result = input.match(/^(?<num>\d*(\.\d+)?(\/\d+(\.\d+)?)?)(?<unit>([a-z]+))$/i);
 
-    // to check if the number is a fraction
-    const index = numberStr.indexOf("/");
+    // if there was a match, result is truthy
+    if (result) {
+      number = result.groups["num"];
 
-    // if there's at least one / in there, check if it's the only one
-    // -1 means not found
-    if (index !== -1) {
-      if (numberStr.indexOf("/") === numberStr.lastIndexOf("/")) {
-        const numbers = numberStr.split("/");
-        const numerator = parseFloat(numbers[0]);
-        const denominator = parseFloat(numbers[1]);
-        numberStr = (numerator / denominator).toString();
+      // check if we've got a fraction (indexOf returns -1 when the character is not found)
+      if (number.toString().indexOf("/") !== -1) {
+        const numbers = number.toString().split("/");
+
+        // if there are more than two elements in the numbers array, it's invalid
+        // because this means it's a double (or more) fraction
+        if (numbers.length > 2) {
+          throw new Error("invalid number");
+        } else if (numbers.length === 2) {
+          const numerator = numbers[0];
+          const denominator = numbers[1];
+          number = Number((numerator / denominator).toString());
+        }
       } else {
-        throw new Error("invalid number");
+        number = Number(result.groups["num"]);
       }
     } else {
-      const number = parseFloat(numberStr);
-
-      if (!checkNumber(number)) {
-        throw new Error("invalid number");
-      } else if (!checkNumberAndUnit(input)) {
-        throw new Error("invalid number and unit");
-      }
-      return number;
+      throw new Error("invalid number");
     }
+
+    return number;
   };
 
   this.getUnit = function(input) {
-    const [unit] = input.match(/([a-z]+)/i);
-    return unit;
+    const result = input.match(/^(?<num>\d*(\.\d+)?(\/\d+(\.\d+)?)?)(?<unit>([a-z]+))$/i);
+    let unit = result.groups["unit"];
+    if (unit === "l" || unit === "L") {
+      return "L";
+    }
+    return unit.toLowerCase();
   };
   
   this.getReturnUnit = function(initUnit) {
     let result;
-    switch (initUnit.toString().toLowerCase()) {
+    switch (initUnit.toString()) {
       case "mi":
         result = "km";
         break;
@@ -100,7 +103,7 @@ function ConvertHandler() {
   this.spellOutUnit = function(unit) {
     let result;
     if (unit) {
-      switch (unit.toString().toLowerCase()) {
+      switch (unit.toString()) {
         case "mi":
           result = "miles";
           break;
@@ -119,7 +122,7 @@ function ConvertHandler() {
         case "L":
           result = "liters";
           break;
-        default:
+        default: 
           throw new Error("invalid unit");
       }
       
@@ -132,7 +135,7 @@ function ConvertHandler() {
       const lbsToKg = 0.453592;
       const miToKm = 1.60934;
       let result;
-      switch (initUnit.toString().toLowerCase()) {
+      switch (initUnit.toString()) {
         case "gal":
           result = initNum * galToL;
           break;
@@ -140,7 +143,7 @@ function ConvertHandler() {
           result = initNum * lbsToKg;
           break;
         case "mi":
-          result = initNum = miToKm;
+          result = initNum * miToKm;
           break;
         case "L":
           result = initNum / galToL;
