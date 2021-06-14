@@ -24,12 +24,10 @@ function ConvertHandler() {
   };
 
   const verifyInput = (input) => {
-    if (!checkNumberAndUnit(input)) {
-      throw new Error("invalid number and unit");
-    }
-
     if (!checkNumber(input)) {
       throw new Error("invalid number");
+    } else if (!checkNumberAndUnit(input)) {
+      throw new Error("invalid number and unit");
     }
 
     if (!checkUnit(input)) {
