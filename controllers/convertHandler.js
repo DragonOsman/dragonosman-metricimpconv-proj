@@ -1,43 +1,54 @@
 function ConvertHandler() {
   const checkNumber = (input) => {
+    return /^(?<num>\d*(\.\d+)?(\/\d+(\.\d+)?)?)(?<unit>([a-z]+))$/i.test(input);
+  }
+
+  const checkUnit = (input) => {
+    console.log("test");
+    
     const result = input.match(/^(?<num>\d*(\.\d+)?(\/\d+(\.\d+)?)?)(?<unit>([a-z]+))$/i);
-    if (!result) {
+    if (result) {
+      const unit = result.groups["unit"];
+      switch (unit.toLowerCase()) {
+        case "mi":
+        case "lbs":
+        case "gal":
+        case "km":
+        case "kg":
+        case "l":
+          return true;
+      }
+
       return false;
     }
-    return true;
   }
 
   const checkNumberAndUnit = (input) => {
-    const isNumberValid = checkNumber(input);
-    if (isNumberValid) {
-      const result = input.match(/^(?<num>\d*(\.\d+)?(\/\d+(\.\d+)?)?)(?<unit>([a-z]+))$/i);
-      const unit = result.groups["unit"];
-      if (unit.toLowerCase() !== "lbs" && unit.toLowerCase() !== "gal" && unit.toLowerCase() !== "l" &&
-      unit.toLowerCase() !== "km" && unit.toLowerCase() !== "kg" && unit.toLowerCase() !== "mi") {
-        return false;
-      } else {
-        return true;
-      }
+    console.log("test");
+    return !(checkNumber(input) && checkUnit(input));
+  };
+
+  const verifyInput = (input) => {
+    if (!checkNumber(input)) {
+      throw new Error("invalid number");
+    } else if (!checkUnit(input)) {
+      throw new Error("invalid unit");
+    } else if (!checkNumberAndUnit(input)) {
+      throw new Error("invalid number and unit");
     }
+    return true;
   }
 
   this.getNum = function(input) {
     if (/^(km|kg|L|gal|lbs|mi)$/i.test(input)) {
       // We only got a unit, so the number should be 1
       return 1;
-    }
-    
-    if (!checkNumberAndUnit(input)) {
-      throw new Error("invalid number and unit");
-    } else if (!checkNumber(input)) {
-      throw new Error("invalid number");
-    }
+    } 
 
-    let number = 0;
-    const result = input.match(/^(?<num>\d*(\.\d+)?(\/\d+(\.\d+)?)?)(?<unit>([a-z]+))$/i);
+    if (verifyInput(input)) {
+      let number = 0;
+      const result = input.match(/^(?<num>\d*(\.\d+)?(\/\d+(\.\d+)?)?)(?<unit>([a-z]+))$/i);
 
-    // if there was a match, result is truthy
-    if (result) {
       number = result.groups["num"];
 
       // check if we've got a fraction (indexOf returns -1 when the character is not found)
@@ -52,15 +63,15 @@ function ConvertHandler() {
           const numerator = numbers[0];
           const denominator = numbers[1];
           number = Number((numerator / denominator).toString());
+
+          return number;
         }
       } else {
         number = Number(result.groups["num"]);
-      }
-    } else {
-      throw new Error("invalid number");
-    }
 
-    return number;
+        return number;
+      }
+    }
   };
 
   this.getUnit = function(input) {
@@ -132,35 +143,35 @@ function ConvertHandler() {
   
   this.convert = function(initNum, initUnit) {
     const galToL = 3.78541;
-      const lbsToKg = 0.453592;
-      const miToKm = 1.60934;
-      let result;
-      switch (initUnit.toString()) {
-        case "gal":
-          result = initNum * galToL;
-          break;
-        case "lbs":
-          result = initNum * lbsToKg;
-          break;
-        case "mi":
-          result = initNum * miToKm;
-          break;
-        case "L":
-          result = initNum / galToL;
-          break;
-        case "kg":
-          result = initNum / lbsToKg;
-          break;
-        case "km":
-          result = initNum / miToKm;
-          break;
-      }
+    const lbsToKg = 0.453592;
+    const miToKm = 1.60934;
+    let result;
+    switch (initUnit.toString()) {
+      case "gal":
+        result = initNum * galToL;
+        break;
+      case "lbs":
+        result = initNum * lbsToKg;
+        break;
+      case "mi":
+        result = initNum * miToKm;
+        break;
+      case "L":
+        result = initNum / galToL;
+        break;
+      case "kg":
+        result = initNum / lbsToKg;
+        break;
+      case "km":
+        result = initNum / miToKm;
+        break;
+    }
 
-      if (result) {
-        result = result.toFixed(5);
+    if (result) {
+      result = result.toFixed(5);
     
-        return result;
-      }
+      return result;
+    }
   };
   
   this.getString = function(initNum, initUnit, returnNum, returnUnit) {
