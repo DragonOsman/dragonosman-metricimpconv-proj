@@ -9,16 +9,16 @@ function ConvertHandler() {
 
   const checkUnit = (input) => {
     console.log("line 11: test");
-    return /(mi|lbs|gal|km|kg|L)$/i.test(input);
+    const [unit] = input.match(/(mi|lbs|gal|km|kg|L)$/i);
+    if (!unit) {
+      return false;
+    }
+    return true;
   }
 
   const checkNumberAndUnit = (input) => {
     console.log("line 16: test");
-    const result = input.match(/^(?<num>\d*(\.\d+)?(\/\d+(\.\d+)?)?)(?<unit>([a-z]+))$/i);
-    if (result) {
-      const unit = result.groups["unit"];
-      return /^(mi|lbs|gal|km|kg|L))$/i.test(unit);
-    }
+    return checkNumber(input) && checkUnit(input);
   };
 
   this.getNum = function(input) {
@@ -27,47 +27,55 @@ function ConvertHandler() {
       return 1;
     } 
 
-    if (!checkNumber(input)) {
-      throw new Error("invalid number");
-    }
-
-    if (!checkNumberAndUnit(input)) {
-      console.log("line 35: test");
-      throw new Error("invalid number and unit");
-    }
-
     const result = input.match(/^(?<num>\d*(\.\d+)?(\/\d+(\.\d+)?)?)(?<unit>([a-z]+))$/i);
-    if (!result) {
-      throw new Error("invalid number");
-    }
     let number = 0;
-    number = result.groups["num"];
+    let unit;
+    if (result) {
+      number = result.groups["num"];
 
-    // check if we've got a fraction (indexOf returns -1 when the character is not found)
-    if (number.toString().indexOf("/") !== -1) {
-      const numbers = number.toString().split("/");
+      console.log("line 36: result is (type) ", typeof result);
+      unit = result.groups["unit"];
 
-      // if there are more than two elements in the numbers array, it's invalid
-      // because this means it's a double (or more) fraction
-      if (numbers.length > 2) {
-        throw new Error("invalid number");
-      } else if (numbers.length === 2) {
-        const numerator = numbers[0];
-        const denominator = numbers[1];
-        number = Number((numerator / denominator).toString());
+      // check if we've got a fraction (indexOf returns -1 when the character is not found)
+      if (number.toString().indexOf("/") !== -1) {
+        const numbers = number.toString().split("/");
+
+        // if there are more than two elements in the numbers array, it's invalid
+        // because this means it's a double (or more) fraction
+        if (numbers.length > 2) {
+          throw new Error("invalid number");
+        } else if (numbers.length === 2) {
+          const numerator = numbers[0];
+          const denominator = numbers[1];
+          number = Number((numerator / denominator).toString());
+
+          return number;
+        }
+      } else {
+        number = Number(result.groups["num"]);
 
         return number;
       }
     } else {
-      number = Number(result.groups["num"]);
-
-      return number;
+      if (!checkNumberAndUnit(input)) {
+        console.log("line 61: test");
+        throw new Error("invalid number and unit");
+      } else if (!checkNumber(input)) {
+        console.log("line 64: test");
+        throw new Error("invalid number");
+      } else if (!checkUnit(input)) {
+        console.log("line 67: test");
+        throw new Error("invalid unit");
+      }
     }
   };
 
   this.getUnit = function(input) {
     const result = input.match(/^(?<num>\d*(\.\d+)?(\/\d+(\.\d+)?)?)(?<unit>([a-z]+))$/i);
-    let unit = result.groups["unit"];
+    if (!result) {
+      throw new Error("invalid number");
+    }
+    const unit = result.groups["unit"];
     if (unit === "l" || unit === "L") {
       return "L";
     }
