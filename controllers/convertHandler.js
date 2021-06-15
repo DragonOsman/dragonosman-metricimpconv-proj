@@ -20,18 +20,15 @@ function ConvertHandler() {
   }
 
   const checkNumberAndUnit = (input) => {
-    return (checkNumber(input) && checkUnit(input));
+    if (!(checkNumber(input) && checkUnit(input))) {
+      return false;
+    }
+    return true;
   };
 
   const verifyInput = (input) => {
-    if (!checkNumber(input)) {
-      throw new Error("invalid number");
-    } else if (!checkNumberAndUnit(input)) {
+    if (!checkNumberAndUnit(input)) {
       throw new Error("invalid number and unit");
-    }
-
-    if (!checkUnit(input)) {
-      throw new Error("invalid unit");
     }
     return true;
   }
@@ -41,6 +38,10 @@ function ConvertHandler() {
       // We only got a unit, so the number should be 1
       return 1;
     } 
+
+    if (!checkNumber(input)) {
+      throw new Error("invalid number");
+    }
 
     if (verifyInput(input)) {
       let number = 0;
@@ -77,6 +78,10 @@ function ConvertHandler() {
     let unit = result.groups["unit"];
     if (unit === "l" || unit === "L") {
       return "L";
+    }
+
+    if (!checkUnit(input)) {
+      throw new Error("invalid unit");
     }
     return unit.toLowerCase();
   };
