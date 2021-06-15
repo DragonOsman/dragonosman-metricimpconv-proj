@@ -8,22 +8,18 @@ function ConvertHandler() {
   }
 
   const checkUnit = (input) => {
+    console.log("line 11: test");
     return /(mi|lbs|gal|km|kg|L)$/i.test(input);
   }
 
   const checkNumberAndUnit = (input) => {
-    if (!checkNumber(input) && !checkUnit(input)) {
-      return false;
+    console.log("line 16: test");
+    const result = input.match(/^(?<num>\d*(\.\d+)?(\/\d+(\.\d+)?)?)(?<unit>([a-z]+))$/i);
+    if (result) {
+      const unit = result.groups["unit"];
+      return /^(mi|lbs|gal|km|kg|L))$/i.test(unit);
     }
-    return true;
   };
-
-  const verifyInput = (input) => {
-    if (!checkNumberAndUnit(input)) {
-      throw new Error("invalid number and unit");
-    }
-    return true;
-  }
 
   this.getNum = function(input) {
     if (/^([a-z])$/i.test(input)) {
@@ -35,34 +31,37 @@ function ConvertHandler() {
       throw new Error("invalid number");
     }
 
-    if (verifyInput(input)) {
-      const result = input.match(/^(?<num>\d*(\.\d+)?(\/\d+(\.\d+)?)?)(?<unit>([a-z]+))$/i);
-      if (!result) {
+    if (!checkNumberAndUnit(input)) {
+      console.log("line 35: test");
+      throw new Error("invalid number and unit");
+    }
+
+    const result = input.match(/^(?<num>\d*(\.\d+)?(\/\d+(\.\d+)?)?)(?<unit>([a-z]+))$/i);
+    if (!result) {
+      throw new Error("invalid number");
+    }
+    let number = 0;
+    number = result.groups["num"];
+
+    // check if we've got a fraction (indexOf returns -1 when the character is not found)
+    if (number.toString().indexOf("/") !== -1) {
+      const numbers = number.toString().split("/");
+
+      // if there are more than two elements in the numbers array, it's invalid
+      // because this means it's a double (or more) fraction
+      if (numbers.length > 2) {
         throw new Error("invalid number");
-      }
-      let number = 0;
-      number = result.groups["num"];
-
-      // check if we've got a fraction (indexOf returns -1 when the character is not found)
-      if (number.toString().indexOf("/") !== -1) {
-        const numbers = number.toString().split("/");
-
-        // if there are more than two elements in the numbers array, it's invalid
-        // because this means it's a double (or more) fraction
-        if (numbers.length > 2) {
-          throw new Error("invalid number");
-        } else if (numbers.length === 2) {
-          const numerator = numbers[0];
-          const denominator = numbers[1];
-          number = Number((numerator / denominator).toString());
-
-          return number;
-        }
-      } else {
-        number = Number(result.groups["num"]);
+      } else if (numbers.length === 2) {
+        const numerator = numbers[0];
+        const denominator = numbers[1];
+        number = Number((numerator / denominator).toString());
 
         return number;
       }
+    } else {
+      number = Number(result.groups["num"]);
+
+      return number;
     }
   };
 
