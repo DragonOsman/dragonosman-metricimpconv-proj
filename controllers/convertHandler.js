@@ -27,10 +27,8 @@ function ConvertHandler() {
 
     const result = input.match(/^(?<num>\d*(\.\d+)?(\/\d+(\.\d+)?)?)(?<unit>([a-z]+))$/i);
     let number = 0;
-    let unit;
     if (result) {
       number = result.groups["num"];
-      unit = result.groups["unit"];
 
       // check if we've got a fraction (indexOf returns -1 when the character is not found)
       if (number.toString().indexOf("/") !== -1) {
@@ -57,9 +55,9 @@ function ConvertHandler() {
         throw new Error("invalid number and unit");
       } else if (!checkNumber(input)) {
         throw new Error("invalid number");
-      } else if (!checkUnit(input)) {
+      }/* else if (!checkUnit(input)) {
         throw new Error("invalid unit");
-      }
+      }*/
     }
   };
 
@@ -100,8 +98,6 @@ function ConvertHandler() {
       case "L":
         result = "gal";
         break;
-      default:
-        throw new Error("invalid unit");
     }
     
     return result;
@@ -129,8 +125,6 @@ function ConvertHandler() {
         case "L":
           result = "liters";
           break;
-        default: 
-          throw new Error("invalid unit");
       }
       
       return result;
