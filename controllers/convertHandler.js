@@ -8,9 +8,7 @@ function ConvertHandler() {
   }
 
   const checkUnit = (input) => {
-    console.log("line 11: test");
-    const [unit] = input.match(/(mi|lbs|gal|km|kg|L)$/i);
-    console.log("line 13: type of unit is ", typeof unit);
+    const unit = input.match(/(mi|lbs|gal|km|kg|L)$/i);
     if (!unit) {
       return false;
     }
@@ -18,8 +16,7 @@ function ConvertHandler() {
   }
 
   const checkNumberAndUnit = (input) => {
-    console.log("line 21: test");
-    return checkNumber(input) && checkUnit(input);
+    return (checkNumber(input) && checkUnit(input));
   };
 
   this.getNum = function(input) {
@@ -33,8 +30,6 @@ function ConvertHandler() {
     let unit;
     if (result) {
       number = result.groups["num"];
-
-      console.log("line 37: result is (type) ", typeof result);
       unit = result.groups["unit"];
 
       // check if we've got a fraction (indexOf returns -1 when the character is not found)
@@ -59,13 +54,10 @@ function ConvertHandler() {
       }
     } else {
       if (!checkNumberAndUnit(input)) {
-        console.log("line 62: test");
         throw new Error("invalid number and unit");
       } else if (!checkNumber(input)) {
-        console.log("line 65: test");
         throw new Error("invalid number");
       } else if (!checkUnit(input)) {
-        console.log("line 68: test");
         throw new Error("invalid unit");
       }
     }
