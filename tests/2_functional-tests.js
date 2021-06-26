@@ -7,5 +7,18 @@ chai.use(chaiHttp);
 suite("Functional Tests", () => {
   chai.request(server)
     .get("/api/convert")
-    .send("10L");
+    .send("10L")
+  ;
+  chai.request(server)
+    .get("/api/convert")
+    .send("32g")
+  ;
+  chai.request(server)
+    .get("/api/convert")
+    .send("3/7.2/4kg")
+  ;
+  chai.request(server)
+    .get("/api/convert")
+    .send("kg")
+  ;
 });
