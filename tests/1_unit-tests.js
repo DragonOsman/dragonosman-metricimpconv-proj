@@ -353,6 +353,87 @@ suite("Unit Tests", () => {
         expect(returnUnit11).to.equal("kg");
         expect(returnUnit12).to.equal("lbs");
       });
+
+      it("should correctly convert gal to L", () => {
+        const unit1 = "gal";
+        const unit2 = "Gal";
+        const unit3 = "GAL";
+
+        const returnUnit1 = convertHandler.getReturnUnit(unit1);
+        const returnUnit2 = convertHandler.getReturnUnit(unit2);
+        const returnUnit3 = convertHandler.getReturnUnit(unit3);
+
+        expect(returnUnit1).to.equal("L");
+        expect(returnUnit2).to.equal("L");
+        expect(returnUnit3).to.equal("L");
+      });
+
+      it("should correctly convert L to gal", () => {
+        const unit1 = "L";
+        const unit2 = "l";
+
+        const returnUnit1 = convertHandler.getReturnUnit(unit1);
+        const returnUnit2 = convertHandler.getReturnUnit(unit2);
+
+        expect(returnUnit1).to.equal("gal");
+        expect(returnUnit2).to.equal("gal");
+      });
+
+      it("should correctly convert mi to km", () => {
+        const unit1 = "mi";
+        const unit2 = "MI";
+        const unit3 = "Mi";
+
+        const returnUnit1 = convertHandler.getReturnUnit(unit1);
+        const returnUnit2 = convertHandler.getReturnUnit(unit2);
+        const returnUnit3 = convertHandler.getReturnUnit(unit3);
+
+        expect(returnUnit1).to.equal("km");
+        expect(returnUnit2).to.equal("km");
+        expect(returnUnit3).to.equal("km");
+      });
+
+      it("should correctly convert km to mi", () => {
+        const unit1 = "km";
+        const unit2 = "KM";
+        const unit3 = "Km";
+
+        const returnUnit1 = convertHandler.getReturnUnit(unit1);
+        const returnUnit2 = convertHandler.getReturnUnit(unit2);
+        const returnUnit3 = convertHandler.getReturnUnit(unit3);
+
+        expect(returnUnit1).to.equal("mi");
+        expect(returnUnit2).to.equal("mi");
+        expect(returnUnit3).to.equal("mi");
+      });
+
+      it("should correctly convert lbs to kg", () => {
+        const unit1 = "lbs";
+        const unit2 = "LBS";
+        const unit3 = "Lbs";
+
+        const returnUnit1 = convertHandler.getReturnUnit(unit1);
+        const returnUnit2 = convertHandler.getReturnUnit(unit2);
+        const returnUnit3 = convertHandler.getReturnUnit(unit3);
+
+        expect(returnUnit1).to.equal("kg");
+        expect(returnUnit2).to.equal("kg");
+        expect(returnUnit3).to.equal("kg");
+      });
+
+      it("should correctly convert kg to lbs", () => {
+        const unit1 = "kg";
+        const unit2 = "KG";
+        const unit3 = "Kg";
+
+        const returnUnit1 = convertHandler.getReturnUnit(unit1);
+        const returnUnit2 = convertHandler.getReturnUnit(unit2);
+        const returnUnit3 = convertHandler.getReturnUnit(unit3);
+
+        expect(returnUnit1).to.equal("lbs");
+        expect(returnUnit2).to.equal("lbs");
+        expect(returnUnit3).to.equal("lbs");
+      })
     });
 
     describe("Get the spelled-out form of a unit", () => {
@@ -395,27 +476,6 @@ suite("Unit Tests", () => {
         expect(spelledUnit10).to.equal("gallons");
         expect(spelledUnit11).to.equal("pounds");
         expect(spelledUnit12).to.equal("kilograms");
-      });
-    });
-
-    describe("Convert to correct unit", () => {
-      it("should correctly convert gal to L", () => {
-        const input1 = "250gal";
-        const input2 = "3.4/2Gal";
-        const input3 = "30.123GAL";
-
-        const initNum1 = convertHandler.getNum(input1);
-        const initNum2 = convertHandler.getNum(input3);
-        const initNum3 = convertHandler.getNum(input3);
-        const initUnit1 = convertHandler.getUnit(input1);
-        const initUnit2 = convertHandler.getUnit(input2);
-        const initUnit3 = convertHandler.getUnit(input3);
-
-        const result1 = convertHandler.convert(initNum1, initUnit1);
-        const result2 = convertHandler.convert(initNum2, initUnit2);
-        const result3 = convertHandler.convert(initNum3, initUnit3);
-
-
       });
     });
   });
