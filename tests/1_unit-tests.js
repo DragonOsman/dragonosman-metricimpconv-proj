@@ -62,7 +62,7 @@ suite("Unit Tests", () => {
         const input5 = "3/5L";
         const input6 = "1/3gal";
         const input7 = "23/40kg"
-        const input8 = "230/400/gal";
+        const input8 = "230/400gal";
 
         const num1 = convertHandler.getNum(input1);
         const num2 = convertHandler.getNum(input2);
