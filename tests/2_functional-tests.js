@@ -13,7 +13,7 @@ suite("Functional Tests", () => {
       expect(res.body).to.equal({
         initNum: 10,
         initUnit: "L",
-        returnNum: 2.64172,
+        returnNum: "2.64172",
         returnUnit: "gal",
         string: "10 liters converts to 2.64172 gallons"
       });
