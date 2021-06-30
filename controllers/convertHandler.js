@@ -1,9 +1,5 @@
 function ConvertHandler() {
   const checkNumber = (input) => {
-    if (/^([a-z]+)$/i.test(input)) {
-      return true;
-    }
-
     return /^\d*(\.\d+)?(\/\d+(\.\d+)?)?/.test(input);
   }
 
@@ -20,7 +16,7 @@ function ConvertHandler() {
   };
 
   this.getNum = function(input) {
-    if (/^([a-z])$/i.test(input)) {
+    if (/^([a-z])$/i.test(input) && /^(mi|gal|L|km|kg|lbs)$/i.test(input)) {
       // We only got a unit, so the number should be 1
       return 1;
     } 

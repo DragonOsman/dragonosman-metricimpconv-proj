@@ -278,16 +278,16 @@ suite("Unit Tests", () => {
         expect(convertHandler.getUnit.bind(convertHandler, input1)).to.throw("invalid unit");
         expect(convertHandler.getUnit.bind(convertHandler, input2)).to.throw("invalid unit");
         expect(convertHandler.getUnit.bind(convertHandler, input3)).to.throw("invalid unit");
-        expect(convertHandler.getUnit.bind(convertHandler, input4)).to.Throw("invalid unit");
-        expect(convertHandler.getUnit.bind(convertHandler, input5)).to.Throw("invalid unit");
-        expect(convertHandler.getUnit.bind(convertHandler, input6)).to.Throw("invalid unit");
-        expect(convertHandler.getUnit.bind(convertHandler, input7)).to.Throw("invalid unit");
-        expect(convertHandler.getUnit.bind(convertHandler, input8)).to.Throw("invalid unit");
-        expect(convertHandler.getUnit.bind(convertHandler, input9)).to.Throw("invalid unit");
-        expect(convertHandler.getUnit.bind(convertHandler, input10)).to.Throw("invalid unit");
-        expect(convertHandler.getUnit.bind(convertHandler, input11)).to.Throw("invalid unit");
-        expect(convertHandler.getUnit.bind(convertHandler, input12)).to.Throw("invalid unit");
-        expect(convertHandler.getUnit.bind(convertHandler, input13)).to.Throw("invalid unit");
+        expect(convertHandler.getUnit.bind(convertHandler, input4)).to.throw("invalid unit");
+        expect(convertHandler.getUnit.bind(convertHandler, input5)).to.throw("invalid unit");
+        expect(convertHandler.getUnit.bind(convertHandler, input6)).to.throw("invalid unit");
+        expect(convertHandler.getUnit.bind(convertHandler, input7)).to.throw("invalid unit");
+        expect(convertHandler.getUnit.bind(convertHandler, input8)).to.throw("invalid unit");
+        expect(convertHandler.getUnit.bind(convertHandler, input9)).to.throw("invalid unit");
+        expect(convertHandler.getUnit.bind(convertHandler, input10)).to.throw("invalid unit");
+        expect(convertHandler.getUnit.bind(convertHandler, input11)).to.throw("invalid unit");
+        expect(convertHandler.getUnit.bind(convertHandler, input12)).to.throw("invalid unit");
+        expect(convertHandler.getUnit.bind(convertHandler, input13)).to.throw("invalid unit");
       });
     });
 
