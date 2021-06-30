@@ -23,12 +23,12 @@ suite("Unit Tests", () => {
         const num5 = convertHandler.getNum(input5);
         const num6 = convertHandler.getNum(input6);
   
-        expect(num1).to.equal(3);
-        expect(num2).to.equal(30);
-        expect(num3).to.equal(10);
-        expect(num4).to.equal(100);
-        expect(num5).to.equal(20);
-        expect(num6).to.equal(40);
+        assert(num1 === 3);
+        assert(num2 === 30);
+        assert(num3 === 10);
+        assert(num4 === 100);
+        assert(num5 === 20);
+        assert(num6 === 40);
       });
 
       it("should correctly read a decimal number input", () => {
@@ -46,12 +46,12 @@ suite("Unit Tests", () => {
         const num5 = convertHandler.getNum(input5);
         const num6 = convertHandler.getNum(input6);
   
-        expect(num1).to.equal(3.1);
-        expect(num2).to.equal(30.43);
-        expect(num3).to.equal(10.2354);
-        expect(num4).to.equal(100.2345);
-        expect(num5).to.equal(20.3456);
-        expect(num6).to.equal(40.5678);
+        assert(num1 === 3.1);
+        assert(num2 === 30.43);
+        assert(num3 === 10.2354);
+        assert(num4 === 100.2345);
+        assert(num5 === 20.3456);
+        assert(num6 === 40.5678);
       });
 
       it("should correctly read a fractional input", () => {
@@ -73,14 +73,14 @@ suite("Unit Tests", () => {
         const num7 = convertHandler.getNum(input7);
         const num8 = convertHandler.getNum(input8);
 
-        expect(num1).to.equal(2/3);
-        expect(num2).to.equal(1/2);
-        expect(num3).to.equal(3/4);
-        expect(num4).to.equal(1/4);
-        expect(num5).to.equal(3/5);
-        expect(num6).to.equal(1/3);
-        expect(num7).to.equal(23/40);
-        expect(num8).to.equal(230/400);
+        assert(num1 === 2/3);
+        assert(num2 === 1/2);
+        assert(num3 === 3/4);
+        assert(num4 === 1/4);
+        assert(num5 === 3/5);
+        assert(num6 === 1/3);
+        assert(num7 === 23/40);
+        assert(num8 === 230/400);
       });
 
       it("should correctly read a fractional input with a decimal", () => {
@@ -98,12 +98,12 @@ suite("Unit Tests", () => {
         const num5 = convertHandler.getNum(input5);
         const num6 = convertHandler.getNum(input6);
 
-        expect(num1).to.equal(3.4/10);
-        expect(num2).to.equal(1.5/2.5);
-        expect(num3).to.equal(23/5.3);
-        expect(num4).to.equal(100.3/45);
-        expect(num5).to.equal(3.1415925269/45);
-        expect(num6).to.equal(4.25/3);
+        assert(num1 === 3.4/10);
+        assert(num2 === 1.5/2.5);
+        assert(num3 === 23/5.3);
+        assert(num4 === 100.3/45);
+        assert(num5 === 3.1415925269/45);
+        assert(num6 === 4.25/3);
       });
 
       it("should correctly return an error on a double-fraction", () => {
@@ -114,19 +114,12 @@ suite("Unit Tests", () => {
         const input5 = "2/3/4lbs";
         const input6 = "6/7/8kg";
 
-        const num1 = convertHandler.getNum(input1);
-        const num2 = convertHandler.getNum(input2);
-        const num3 = convertHandler.getNum(input3);
-        const num4 = convertHandler.getNum(input4);
-        const num5 = convertHandler.getNum(input5);
-        const num6 = convertHandler.getNum(input6);
-
-        expect(num1).to.Throw("invalid number");
-        expect(num2).to.Throw("invalid number");
-        expect(num3).to.Throw("invalid number");
-        expect(num4).to.Throw("invalid number");
-        expect(num5).to.Throw("invalid number");
-        expect(num6).to.Throw("invalid number");
+        expect(convertHandler.getNum.bind(convertHandler, input1)).to.throw("invalid number");
+        expect(convertHandler.getNum.bind(convertHandler, input2)).to.throw("invalid number");
+        expect(convertHandler.getNum.bind(convertHandler, input3)).to.throw("invalid number");
+        expect(convertHandler.getNum.bind(convertHandler, input4)).to.throw("invalid number");
+        expect(convertHandler.getNum.bind(convertHandler, input5)).to.throw("invalid number");
+        expect(convertHandler.getNum.bind(convertHandler, input6)).to.throw("invalid number");
       });
 
       it("should correctly default to a numerical input of 1 when no numerical input is provided", () => {
@@ -156,18 +149,18 @@ suite("Unit Tests", () => {
         const num11 = convertHandler.getNum(input11);
         const num12 = convertHandler.getNum(input12);
 
-        expect(num1).to.equal(1);
-        expect(num2).to.equal(1);
-        expect(num3).to.equal(1);
-        expect(num4).to.equal(1);
-        expect(num5).to.equal(1);
-        expect(num6).to.equal(1);
-        expect(num7).to.equal(1);
-        expect(num8).to.equal(1);
-        expect(num9).to.equal(1);
-        expect(num10).to.equal(1);
-        expect(num11).to.equal(1);
-        expect(num12).to.equal(1);
+        assert(num1 === 1);
+        assert(num2 === 1);
+        assert(num3 === 1);
+        assert(num4 === 1);
+        assert(num5 === 1);
+        assert(num6 === 1);
+        assert(num7 === 1);
+        assert(num8 === 1);
+        assert(num9 === 1);
+        assert(num10 === 1);
+        assert(num11 === 1);
+        assert(num12 === 1);
       })
     });
 
@@ -235,36 +228,36 @@ suite("Unit Tests", () => {
         const unit29 = convertHandler.getUnit(input29);
         const unit30 = convertHandler.getUnit(input30);
 
-        expect(unit1).to.equal("mi");
-        expect(unit2).to.equal("km");
-        expect(unit3).to.equal("L");
-        expect(unit4).to.equal("kg");
-        expect(unit5).to.equal("gal");
-        expect(unit6).to.equal("lbs");
-        expect(unit7).to.equal("mi");
-        expect(unit8).to.equal("km");
-        expect(unit9).to.equal("L");
-        expect(unit10).to.equal("kg");
-        expect(unit11).to.equal("gal");
-        expect(unit12).to.equal("lbs");
-        expect(unit13).to.equal("mi");
-        expect(unit14).to.equal("lbs");
-        expect(unit15).to.equal("L");
-        expect(unit16).to.equal("gal");
-        expect(unit17).to.equal("kg");
-        expect(unit18).to.equal("km");
-        expect(unit19).to.equal("mi");
-        expect(unit20).to.equal("lbs");
-        expect(unit21).to.equal("kg");
-        expect(unit22).to.equal("km");
-        expect(unit23).to.equal("L");
-        expect(unit24).to.equal("gal");
-        expect(unit25).to.equal("mi");
-        expect(unit26).to.equal("lbs");
-        expect(unit27).to.equal("kg");
-        expect(unit28).to.equal("km");
-        expect(unit29).to.equal("L");
-        expect(unit30).to.equal("gal");
+        assert(unit1 === "mi");
+        assert(unit2 === "km");
+        assert(unit3 === "L");
+        assert(unit4 === "kg");
+        assert(unit5 === "gal");
+        assert(unit6 === "lbs");
+        assert(unit7 === "mi");
+        assert(unit8 === "km");
+        assert(unit9 === "L");
+        assert(unit10 === "kg");
+        assert(unit11 === "gal");
+        assert(unit12 === "lbs");
+        assert(unit13 === "mi");
+        assert(unit14 === "lbs");
+        assert(unit15 === "L");
+        assert(unit16 === "gal");
+        assert(unit17 === "kg");
+        assert(unit18 === "km");
+        assert(unit19 === "mi");
+        assert(unit20 === "lbs");
+        assert(unit21 === "kg");
+        assert(unit22 === "km");
+        assert(unit23 === "L");
+        assert(unit24 === "gal");
+        assert(unit25 === "mi");
+        assert(unit26 === "lbs");
+        assert(unit27 === "kg");
+        assert(unit28 === "km");
+        assert(unit29 === "L");
+        assert(unit30 === "gal");
       });
 
       it("should correctly return an error for an invalid input unit", () => {
@@ -282,33 +275,19 @@ suite("Unit Tests", () => {
         const input12 = "50inches";
         const input13 = "60centimeters";
 
-        const unit1 = convertHandler.getUnit(input1);
-        const unit2 = convertHandler.getUnit(input2);
-        const unit3 = convertHandler.getUnit(input3);
-        const unit4 = convertHandler.getUnit(input4);
-        const unit5 = convertHandler.getUnit(input5);
-        const unit6 = convertHandler.getUnit(input6);
-        const unit7 = convertHandler.getUnit(input7);
-        const unit8 = convertHandler.getUnit(input8);
-        const unit9 = convertHandler.getUnit(input9);
-        const unit10 = convertHandler.getUnit(input10);
-        const unit11 = convertHandler.getUnit(input11);
-        const unit12 = convertHandler.getUnit(input12);
-        const unit13 = convertHandler.getUnit(input13);
-
-        expect(unit1).to.Throw("invalid unit");
-        expect(unit2).to.Throw("invalid unit");
-        expect(unit3).to.Throw("invalid unit");
-        expect(unit4).to.Throw("invalid unit");
-        expect(unit5).to.Throw("invalid unit");
-        expect(unit6).to.Throw("invalid unit");
-        expect(unit7).to.Throw("invalid unit");
-        expect(unit8).to.Throw("invalid unit");
-        expect(unit9).to.Throw("invalid unit");
-        expect(unit10).to.Throw("invalid unit");
-        expect(unit11).to.Throw("invalid unit");
-        expect(unit12).to.Throw("invalid unit");
-        expect(unit13).to.Throw("invalid unit");
+        expect(convertHandler.getUnit.bind(convertHandler, input1)).to.throw("invalid unit");
+        expect(convertHandler.getUnit.bind(convertHandler, input2)).to.throw("invalid unit");
+        expect(convertHandler.getUnit.bind(convertHandler, input3)).to.throw("invalid unit");
+        expect(convertHandler.getUnit.bind(convertHandler, input4)).to.Throw("invalid unit");
+        expect(convertHandler.getUnit.bind(convertHandler, input5)).to.Throw("invalid unit");
+        expect(convertHandler.getUnit.bind(convertHandler, input6)).to.Throw("invalid unit");
+        expect(convertHandler.getUnit.bind(convertHandler, input7)).to.Throw("invalid unit");
+        expect(convertHandler.getUnit.bind(convertHandler, input8)).to.Throw("invalid unit");
+        expect(convertHandler.getUnit.bind(convertHandler, input9)).to.Throw("invalid unit");
+        expect(convertHandler.getUnit.bind(convertHandler, input10)).to.Throw("invalid unit");
+        expect(convertHandler.getUnit.bind(convertHandler, input11)).to.Throw("invalid unit");
+        expect(convertHandler.getUnit.bind(convertHandler, input12)).to.Throw("invalid unit");
+        expect(convertHandler.getUnit.bind(convertHandler, input13)).to.Throw("invalid unit");
       });
     });
 
@@ -340,18 +319,18 @@ suite("Unit Tests", () => {
         const returnUnit11 = convertHandler.getReturnUnit(unit11);
         const returnUnit12 = convertHandler.getReturnUnit(unit12);
 
-        expect(returnUnit1).to.equal("km");
-        expect(returnUnit2).to.equal("mi");
-        expect(returnUnit3).to.equal("gal");
-        expect(returnUnit4).to.equal("L");
-        expect(returnUnit5).to.equal("kg");
-        expect(returnUnit6).to.equal("lbs");
-        expect(returnUnit7).to.equal("km");
-        expect(returnUnit8).to.equal("mi");
-        expect(returnUnit9).to.equal("gal");
-        expect(returnUnit10).to.equal("L");
-        expect(returnUnit11).to.equal("kg");
-        expect(returnUnit12).to.equal("lbs");
+        assert(returnUnit1 === "km");
+        assert(returnUnit2 === "mi");
+        assert(returnUnit3 === "gal");
+        assert(returnUnit4 === "L");
+        assert(returnUnit5 === "kg");
+        assert(returnUnit6 === "lbs");
+        assert(returnUnit7 === "km");
+        assert(returnUnit8 === "mi");
+        assert(returnUnit9 === "gal");
+        assert(returnUnit10 === "L");
+        assert(returnUnit11 === "kg");
+        assert(returnUnit12 === "lbs");
       });
 
       it("should correctly convert gal to L", () => {
@@ -363,9 +342,9 @@ suite("Unit Tests", () => {
         const returnUnit2 = convertHandler.getReturnUnit(unit2);
         const returnUnit3 = convertHandler.getReturnUnit(unit3);
 
-        expect(returnUnit1).to.equal("L");
-        expect(returnUnit2).to.equal("L");
-        expect(returnUnit3).to.equal("L");
+        assert(returnUnit1 === "L");
+        assert(returnUnit2 === "L");
+        assert(returnUnit3 === "L");
       });
 
       it("should correctly convert L to gal", () => {
@@ -375,8 +354,8 @@ suite("Unit Tests", () => {
         const returnUnit1 = convertHandler.getReturnUnit(unit1);
         const returnUnit2 = convertHandler.getReturnUnit(unit2);
 
-        expect(returnUnit1).to.equal("gal");
-        expect(returnUnit2).to.equal("gal");
+        assert(returnUnit1 === "gal");
+        assert(returnUnit2 === "gal");
       });
 
       it("should correctly convert mi to km", () => {
@@ -388,9 +367,9 @@ suite("Unit Tests", () => {
         const returnUnit2 = convertHandler.getReturnUnit(unit2);
         const returnUnit3 = convertHandler.getReturnUnit(unit3);
 
-        expect(returnUnit1).to.equal("km");
-        expect(returnUnit2).to.equal("km");
-        expect(returnUnit3).to.equal("km");
+        assert(returnUnit1 === "km");
+        assert(returnUnit2 === "km");
+        assert(returnUnit3 === "km");
       });
 
       it("should correctly convert km to mi", () => {
@@ -402,9 +381,9 @@ suite("Unit Tests", () => {
         const returnUnit2 = convertHandler.getReturnUnit(unit2);
         const returnUnit3 = convertHandler.getReturnUnit(unit3);
 
-        expect(returnUnit1).to.equal("mi");
-        expect(returnUnit2).to.equal("mi");
-        expect(returnUnit3).to.equal("mi");
+        assert(returnUnit1 === "mi");
+        assert(returnUnit2 === "mi");
+        assert(returnUnit3 === "mi");
       });
 
       it("should correctly convert lbs to kg", () => {
@@ -416,9 +395,9 @@ suite("Unit Tests", () => {
         const returnUnit2 = convertHandler.getReturnUnit(unit2);
         const returnUnit3 = convertHandler.getReturnUnit(unit3);
 
-        expect(returnUnit1).to.equal("kg");
-        expect(returnUnit2).to.equal("kg");
-        expect(returnUnit3).to.equal("kg");
+        assert(returnUnit1 === "kg");
+        assert(returnUnit2 === "kg");
+        assert(returnUnit3 === "kg");
       });
 
       it("should correctly convert kg to lbs", () => {
@@ -430,9 +409,9 @@ suite("Unit Tests", () => {
         const returnUnit2 = convertHandler.getReturnUnit(unit2);
         const returnUnit3 = convertHandler.getReturnUnit(unit3);
 
-        expect(returnUnit1).to.equal("lbs");
-        expect(returnUnit2).to.equal("lbs");
-        expect(returnUnit3).to.equal("lbs");
+        assert(returnUnit1 === "lbs");
+        assert(returnUnit2 === "lbs");
+        assert(returnUnit3 === "lbs");
       })
     });
 
@@ -464,18 +443,18 @@ suite("Unit Tests", () => {
         const spelledUnit11 = convertHandler.spellOutUnit(unit11);
         const spelledUnit12 = convertHandler.spellOutUnit(unit12);
 
-        expect(spelledUnit1).to.equal("miles");
-        expect(spelledUnit2).to.equal("kilometers");
-        expect(spelledUnit3).to.equal("liters");
-        expect(spelledUnit4).to.equal("gallons");
-        expect(spelledUnit5).to.equal("pounds");
-        expect(spelledUnit6).to.equal("kilograms");
-        expect(spelledUnit7).to.equal("miles");
-        expect(spelledUnit8).to.equal("kilometers");
-        expect(spelledUnit9).to.equal("liters");
-        expect(spelledUnit10).to.equal("gallons");
-        expect(spelledUnit11).to.equal("pounds");
-        expect(spelledUnit12).to.equal("kilograms");
+        assert(spelledUnit1 === "miles")
+        assert(spelledUnit2 === "kilometers");
+        assert(spelledUnit3 === "liters");
+        assert(spelledUnit4 === "gallons");
+        assert(spelledUnit5 === "pounds");
+        assert(spelledUnit6 === "kilograms");
+        assert(spelledUnit7 === "miles");
+        assert(spelledUnit8 === "kilometers");
+        assert(spelledUnit9 === "liters");
+        assert(spelledUnit10 === "gallons");
+        assert(spelledUnit11 === "pounds");
+        assert(spelledUnit12 === "kilograms");
       });
     });
   });
