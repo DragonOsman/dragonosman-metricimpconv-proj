@@ -8,24 +8,25 @@ module.exports = (app) => {
   let convertHandler = new ConvertHandler();
 
   app.route("/api/convert").get((req, res) => {
-    try {
-      const inputStr = req.query.input;
-      const inputNumber = convertHandler.getNum(inputStr);
-      const inputUnit = convertHandler.getUnit(inputStr);
-      const returnUnit = convertHandler.getReturnUnit(inputUnit);
-      const result = convertHandler.convert(inputNumber, inputUnit);
-      const fullResultStr = convertHandler.getString(inputNumber, inputUnit, result, returnUnit);
-      res.json({
-        initNum: inputNumber,
-        initUnit: inputUnit,
-        returnNum: result,
-        returnUnit: returnUnit,
-        string: fullResultStr
-      });
-    } catch (error) {
-      console.log("routes/api.js:", error.message);
-      res.json(error.message);
+    const inputStr = req.query.input;
+    const inputNumber = convertHandler.getNum(inputStr);
+    if (inputNumber === "invalid number" || inputNumber === "invalid number and unit") {
+      return inputNumber;
     }
+    const inputUnit = convertHandler.getUnit(inputStr);
+    if (inputUnit === "invalid unit") {
+      return inputUnit;
+    }
+    const returnUnit = convertHandler.getReturnUnit(inputUnit);
+    const result = convertHandler.convert(inputNumber, inputUnit);
+    const fullResultStr = convertHandler.getString(inputNumber, inputUnit, result, returnUnit);
+    return res.json({
+      initNum: inputNumber,
+      initUnit: inputUnit,
+      returnNum: Number(result),
+      returnUnit: returnUnit,
+      string: fullResultStr
+    });
   });
 
 };
