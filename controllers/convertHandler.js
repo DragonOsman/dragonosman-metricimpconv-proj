@@ -22,38 +22,35 @@ function ConvertHandler() {
     } 
 
     const result = input.match(/^(?<num>\d*(\.\d+)?(\/\d+(\.\d+)?)?)(?<unit>([a-z]+))$/i);
-    if (result) {
-      let number = result.groups["num"];
+    if (!result) {
+      return "invalid number";
+    }
 
-      // check if we've got a fraction (indexOf returns -1 when the character is not found)
-      if (number.toString().indexOf("/") !== -1) {
-        const numbers = number.toString().split("/");
+    if (!checkNumber(input)) {
+      return "invalid number";
+    } else if (!checkNumberAndUnit(input)) {
+      return "invalid number and unit";
+    }
 
-        // if there are more than two elements in the numbers array, it's invalid
-        // because this means it's a double (or more) fraction
-        if (numbers.length === 3) {
-          return "invalid number";
-        } else if (numbers.length === 2) {
-          const numerator = numbers[0];
-          const denominator = numbers[1];
-          number = Number((numerator / denominator).toString());
+    let number = result["groups"]["num"];
 
-          return number;
-        }
-      } else if (number.toString().indexOf("/") === -1) {
-        number = Number(result.groups["num"]);
-
-        return number;
-      } else if (!Number(number)) {
-        return "invalid number";
-      }
+    // if indexOf returns -1 here, it means a slash wasn't found and it's a not a fraction
+    if (number.toString().indexOf("/") !== -1) {
+      number = Number(number);
     } else {
-      if (!checkNumberAndUnit(input)) {
-        return "invalid number and unit";
-      } else if (!checkNumber(input)) {
+      // turn the number string into an array, each part separated by the / being an element
+      // then check the number of elements
+      const numbers = number.toString().split("/");
+      if (numbers.length === 2) {
+        const numerator = numbers[0];
+        const denominator = numbers[1];
+        number = Number(numerator / denominator);
+      } else if (numbers.length > 2) {
         return "invalid number";
       }
     }
+
+    return number;
   };
 
   this.getUnit = function(input) {
