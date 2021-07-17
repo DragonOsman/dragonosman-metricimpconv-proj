@@ -23,6 +23,10 @@ function ConvertHandler() {
       throw new Error("invalid number");
     }
 
+    if (!checkUnit(unit)) {
+      throw new Error("invalid unit");
+    }
+
     if (!checkNumberAndUnit(number, unit)) {
       throw new Error("invalid number and unit");
     }
