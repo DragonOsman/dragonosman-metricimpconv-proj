@@ -55,6 +55,10 @@ function ConvertHandler() {
       throw new Error("invalid number");
     }
 
+    if (!checkNumberAndUnit(number, unit)) {
+      throw new Error("invalid number and unit");
+    }
+
     if (unit === "l" || unit === "L") {
       return "L";
     }
