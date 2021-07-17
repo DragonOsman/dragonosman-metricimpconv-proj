@@ -19,10 +19,6 @@ function ConvertHandler() {
 
     const [number, unit] = input.split(/([a-z]+)/i);
 
-    if (!checkUnit(unit)) {
-      throw new Error("invalid unit");
-    }
-
     if (!checkNumber(number)) {
       throw new Error("invalid number");
     }
@@ -49,10 +45,6 @@ function ConvertHandler() {
     const [number, unit] = input.split(/([a-z]+)/i);
     if (!checkUnit(unit)) {
       throw new Error("invalid unit");
-    }
-
-    if (!checkNumber(number)) {
-      throw new Error("invalid number");
     }
 
     if (!checkNumberAndUnit(number, unit)) {
