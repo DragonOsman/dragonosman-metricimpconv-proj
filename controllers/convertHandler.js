@@ -21,14 +21,14 @@ function ConvertHandler() {
 
     if (!checkNumberAndUnit(number, unit)) {
       throw new Error("invalid number and unit");
-    }
-
-    if (!checkNumber(number)) {
-      throw new Error("invalid number");
-    }
-
-    if (!checkUnit(unit)) {
-      throw new Error("invalid unit");
+    } else if (!checkNumber(number) || !checkUnit(unit)) {
+      if (!checkNumber(number)) {
+        throw new Error("invalid number");
+      }
+  
+      if (!checkUnit(unit)) {
+        throw new Error("invalid unit");
+      }
     }
 
     // check if we've got a fraction (indexOf returns -1 when the character is not found)
@@ -50,14 +50,14 @@ function ConvertHandler() {
 
     if (!checkNumberAndUnit(number, unit)) {
       throw new Error("invalid number and unit");
-    }
-
-    if (!checkNumber(number)) {
-      throw new Error("invalid number");
-    }
-
-    if (!checkUnit(unit)) {
-      throw new Error("invalid unit");
+    } else if (!checkNumber(number) || !checkUnit(unit)) {
+      if (!checkNumber(number)) {
+        throw new Error("invalid number");
+      }
+  
+      if (!checkUnit(unit)) {
+        throw new Error("invalid unit");
+      }
     }
 
     if (unit === "l" || unit === "L") {
