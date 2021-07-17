@@ -22,6 +22,7 @@ function ConvertHandler() {
     if (!checkNumberAndUnit(number, unit)) {
       throw new Error("invalid number and unit");
     } else if (!checkNumber(number) || !checkUnit(unit)) {
+      console.log("on line 25");
       if (!checkNumber(number)) {
         throw new Error("invalid number");
       }
