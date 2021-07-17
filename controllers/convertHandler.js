@@ -17,22 +17,18 @@ function ConvertHandler() {
       return 1;
     }
 
-    // check if a unit was entered
-    if (!/([a-z]+)/i.test(input)) {
-      throw new Error("invalid unit");
-    }
     const [number, unit] = input.split(/([a-z]+)/i);
 
-    if (!checkNumberAndUnit(number, unit)) {
-      throw new Error("invalid number and unit");
-    } 
-    
     if (!checkUnit(unit)) {
       throw new Error("invalid unit");
     }
 
     if (!checkNumber(number)) {
       throw new Error("invalid number");
+    }
+
+    if (!checkNumberAndUnit(number, unit)) {
+      throw new Error("invalid number and unit");
     }
 
     // check if we've got a fraction (indexOf returns -1 when the character is not found)
@@ -44,19 +40,12 @@ function ConvertHandler() {
         const denominator = Number(numbers[1]);
 
         return numerator / denominator;
-      } else if (numbers.length >= 3) {
-        throw new Error("invalid number");
       }
     }
     return Number(number);
   };
 
   this.getUnit = function(input) {
-    // check if a unit was entered
-    if (!/([a-z]+)/i.test(input)) {
-      throw new Error("invalid unit");
-    }
-
     const [number, unit] = input.split(/([a-z]+)/i);
     if (!checkUnit(unit)) {
       throw new Error("invalid unit");
