@@ -21,6 +21,18 @@ function ConvertHandler() {
     }
 
     const [number, unit] = input.split(/([a-z]+)/i);
+
+    // check if we've got a fraction (indexOf returns -1 when the character is not found)
+    if (number.toString().indexOf("/") !== -1) {
+      const numbers = number.split("/");
+
+      if (numbers.length === 2) {
+        const numerator = Number(numbers[0]);
+        const denominator = Number(numbers[1]);
+        return numerator / denominator;
+      }
+      return number;
+    }
     return number;
   };
 
@@ -86,18 +98,7 @@ function ConvertHandler() {
   
   this.convert = function(initNum, initUnit) {
     if (checkNumber(initNum) && checkUnit(initUnit)) {
-      // check if we've got a fraction (indexOf returns -1 when the character is not found)
-      if (initNum.toString().indexOf("/") !== -1) {
-        const numbers = initNum.split("/");
-  
-        if (numbers.length === 2) {
-          const numerator = Number(numbers[0]);
-          const denominator = Number(numbers[1]);
-          initNum = Number(numerator / denominator);
-        }
-        initNum = Number(initNum);
-      }
-
+      initNum = Number(initNum);
       const galToL = 3.78541;
       const lbsToKg = 0.453592;
       const miToKm = 1.60934;
