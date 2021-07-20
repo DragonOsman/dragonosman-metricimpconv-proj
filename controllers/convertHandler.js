@@ -14,10 +14,11 @@ function ConvertHandler() {
   }
 
   this.getNum = function(input) {
-    const [number, unit] = input.split(/([a-z]+)/i);
-    if (number === "") {
+    if (/^([a-z]+)$/i.test(input)) {
       return 1;
     }
+
+    const [number, unit] = input.split(/([a-z]+)/i);
     return number;
   };
 
