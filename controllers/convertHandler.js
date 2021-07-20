@@ -14,6 +14,8 @@ function ConvertHandler() {
   }
 
   this.getNum = function(input) {
+    // check if a number was entered;
+    // return 1 if not
     if (/^([a-z]+)$/i.test(input)) {
       return 1;
     }
@@ -83,13 +85,8 @@ function ConvertHandler() {
   };
   
   this.convert = function(initNum, initUnit) {
-    const galToL = 3.785411784;
-    const lbsToKg = 0.453592;
-    const miToKm = 1.60934;
-    let result;
-
-    // check if we've got a fraction (indexOf returns -1 when the character is not found)
     if (checkNumber(initNum) && checkUnit(initUnit)) {
+      // check if we've got a fraction (indexOf returns -1 when the character is not found)
       if (initNum.toString().indexOf("/") !== -1) {
         const numbers = initNum.split("/");
   
@@ -101,6 +98,10 @@ function ConvertHandler() {
         initNum = Number(initNum);
       }
 
+      const galToL = 3.785411784;
+      const lbsToKg = 0.453592;
+      const miToKm = 1.60934;
+      let result;
       switch (initUnit.toLowerCase()) {
         case "gal":
           result = initNum * galToL;
