@@ -13,28 +13,6 @@ function ConvertHandler() {
     return true;
   }
 
-  const checkNumberAndUnit = (number, unit) => {
-    if (!(checkNumber(number) && checkUnit(unit))) {
-      return false;
-    }
-    return true;
-  };
-
-  const checkInput = (number, unit) => {
-    if (!checkNumberAndUnit(number, unit)) {
-      throw new Error("invalid number and unit");
-    }
-
-    if (!checkNumber(number)) {
-      throw new Error("invalid number");
-    }
-
-    if (!checkUnit(unit)) {
-      throw new Error("invalid unit");
-    }
-    return true;
-  };
-
   this.getNum = function(input) {
     if (!/^([0-9])/.test(input)) {
       // We only got a unit, so the number should be 1
@@ -42,29 +20,15 @@ function ConvertHandler() {
     }
 
     const [number, unit] = input.split(/([a-z]+)/i);
-    if (checkInput(number, unit)) {
-      // check if we've got a fraction (indexOf returns -1 when the character is not found)
-      if (number.indexOf("/") !== -1) {
-        const numbers = number.split("/");
-
-        if (numbers.length === 2) {
-          const numerator = Number(numbers[0]);
-          const denominator = Number(numbers[1]);
-          return Number(numerator / denominator);
-        }
-      }
-      return Number(number);
-    }
+    return number;
   };
 
   this.getUnit = function(input) {
     const [number, unit] = input.split(/([a-z]+)/i);
-    if (checkInput(number, unit)) {
-      if (unit === "l" || unit === "L") {
-        return "L";
-      }
-      return unit.toLowerCase();
+    if (unit === "l" || unit === "L") {
+      return "L";
     }
+    return unit.toLowerCase();
   };
   
   this.getReturnUnit = function(initUnit) {
@@ -124,28 +88,49 @@ function ConvertHandler() {
     const lbsToKg = 0.453592;
     const miToKm = 1.60934;
     let result;
-    switch (initUnit.toLowerCase()) {
-      case "gal":
-        result = initNum * galToL;
-        break;
-      case "lbs":
-        result = initNum * lbsToKg;
-        break;
-      case "mi":
-        result = initNum * miToKm;
-        break;
-      case "l":
-        result = initNum / galToL;
-        break;
-      case "kg":
-        result = initNum / lbsToKg;
-      break;
-      case "km":
-        result = initNum / miToKm;
-        break;
-    }
 
-    return Number(result).toFixed(5);
+    // check if we've got a fraction (indexOf returns -1 when the character is not found)
+    if (checkNumber(initNum) && checkUnit(initUnit)) {
+      if (initNum.indexOf("/") !== -1) {
+        const numbers = initNum.split("/");
+  
+        if (numbers.length === 2) {
+          const numerator = Number(numbers[0]);
+          const denominator = Number(numbers[1]);
+          initNum = Number(numerator / denominator);
+        }
+        initNum = Number(initNum);
+      }
+
+      switch (initUnit.toLowerCase()) {
+        case "gal":
+          result = initNum * galToL;
+          break;
+        case "lbs":
+          result = initNum * lbsToKg;
+          break;
+        case "mi":
+          result = initNum * miToKm;
+          break;
+        case "l":
+          result = initNum / galToL;
+          break;
+        case "kg":
+          result = initNum / lbsToKg;
+        break;
+        case "km":
+          result = initNum / miToKm;
+          break;
+      }
+  
+      return Number(result).toFixed(5);
+    } else if (!checkNumber(initNum) && !checkUnit(initUnit)) {
+      throw new Error("invalid number and unit");
+    } else if (!checkNumber(initNum)) {
+      throw new Error("invalid number");
+    } else if (!checkUnit(initUnit)) {
+      throw new Error("invalid unit");
+    }
   };
   
   this.getString = function(initNum, initUnit, returnNum, returnUnit) {
