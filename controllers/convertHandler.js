@@ -90,6 +90,7 @@ function ConvertHandler() {
 
     // check if we've got a fraction (indexOf returns -1 when the character is not found)
     if (checkNumber(initNum) && checkUnit(initUnit)) {
+      console.log("line 93: initNum: ", initNum);
       if (initNum.indexOf("/") !== -1) {
         const numbers = initNum.split("/");
   
