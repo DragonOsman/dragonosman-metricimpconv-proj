@@ -4,7 +4,7 @@ function ConvertHandler() {
       return false;
     }
 
-    if (isNaN(number)) {
+    if (isNaN(number) && !Number(number)) {
       return false;
     }
     return true;
