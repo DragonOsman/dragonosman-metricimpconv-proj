@@ -1,6 +1,10 @@
 function ConvertHandler() {
   const checkNumber = (number) => {
-    if (!/^\d*(\.\d+)?(\/\d+(\.\d+)?)?$/.test(number) && isNaN(number)) {
+    if (!/^\d*(\.\d+)?(\/\d+(\.\d+)?)?$/.test(number)) {
+      return false;
+    }
+
+    if (isNaN(number)) {
       return false;
     }
     return true;
