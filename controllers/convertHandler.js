@@ -36,14 +36,6 @@ function ConvertHandler() {
         return Number(numerator / denominator);
       }
     }
-
-    if (!checkNumber(number) && !checkUnit(unit)) {
-      throw new Error("invalid number and unit");
-    } else if (!checkNumber(number) && checkUnit(unit)) {
-      throw new Error("invalid number");
-    } else if (checkNumber(number) && !checkUnit(unit)) {
-      throw new Error("invalid unit");
-    }
     return Number(number);
   };
 
@@ -109,32 +101,40 @@ function ConvertHandler() {
   };
   
   this.convert = function(initNum, initUnit) {
-    const galToL = 3.78541;
-    const lbsToKg = 0.453592;
-    const miToKm = 1.60934;
-    let result;
-    switch (initUnit.toLowerCase()) {
-      case "gal":
-        result = initNum * galToL;
-        break;
-      case "lbs":
-        result = initNum * lbsToKg;
-        break;
-      case "mi":
-        result = initNum * miToKm;
-        break;
-      case "l":
-        result = initNum / galToL;
-        break;
-      case "kg":
-        result = initNum / lbsToKg;
-      break;
-      case "km":
-        result = initNum / miToKm;
-        break;
-    }
+    if (checkNumber(initNum) && checkUnit(initUnit)) {
+      const galToL = 3.78541;
+      const lbsToKg = 0.453592;
+      const miToKm = 1.60934;
+      let result;
+      switch (initUnit.toLowerCase()) {
+        case "gal":
+          result = initNum * galToL;
+          break;
+        case "lbs":
+          result = initNum * lbsToKg;
+          break;
+        case "mi":
+          result = initNum * miToKm;
+          break;
+        case "l":
+          result = initNum / galToL;
+          break;
+        case "kg":
+          result = initNum / lbsToKg;
+          break;
+        case "km":
+          result = initNum / miToKm;
+          break;
+      }
   
-    return Number(result).toFixed(5);
+      return Number(result).toFixed(5);
+    } else if (!checkNumber(initNum) && !checkUnit(initUnit)) {
+      throw new Error("invalid number and unit");
+    } else if (!checkNumber(initNum) && checkUnit(initUnit)) {
+      throw new Error("invalid number");
+    } else if (checkNumber(initNum) && !checkUnit(initUnit)) {
+      throw new Error("invalid unit");
+    }
   };
   
   this.getString = function(initNum, initUnit, returnNum, returnUnit) {
