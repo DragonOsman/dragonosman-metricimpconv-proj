@@ -1,6 +1,6 @@
 function ConvertHandler() {
   const checkNumber = (number) => {
-    if (!/^(\d*(\.\d+)?(\/\d+(\.\d+)?)?)([a-z]+)$/.test(number)) {
+    if (!/^(\d*(\.\d+)?(\/\d+(\.\d+)?)?)$/.test(number)) {
       return false;
     }
 
