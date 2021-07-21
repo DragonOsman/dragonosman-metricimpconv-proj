@@ -33,11 +33,18 @@ function ConvertHandler() {
       if (numbers.length === 2) {
         const numerator = Number(numbers[0]);
         const denominator = Number(numbers[1]);
-        return numerator / denominator;
+        return Number(numerator / denominator);
+      } else if (numbers.length > 2) {
+        throw new Error("invalid number");
       }
-      return number;
     }
-    return number;
+
+    if (!checkNumber(initNum) && !checkUnit(initUnit)) {
+      throw new Error("invalid number and unit");
+    } else if (!checkNumber(initNum)) {
+      throw new Error("invalid number");
+    }
+    return Number(number);
   };
 
   this.getUnit = function(input) {
@@ -45,6 +52,11 @@ function ConvertHandler() {
     if (unit === "l" || unit === "L") {
       return "L";
     }
+
+    if (!checkUnit(unit)) {
+      throw new Error("invalid unit");
+    }
+
     return unit.toLowerCase();
   };
   
@@ -101,41 +113,32 @@ function ConvertHandler() {
   };
   
   this.convert = function(initNum, initUnit) {
-    if (checkNumber(initNum) && checkUnit(initUnit)) {
-      initNum = Number(initNum);
-      const galToL = 3.78541;
-      const lbsToKg = 0.453592;
-      const miToKm = 1.60934;
-      let result;
-      switch (initUnit.toLowerCase()) {
-        case "gal":
-          result = initNum * galToL;
-          break;
-        case "lbs":
-          result = initNum * lbsToKg;
-          break;
-        case "mi":
-          result = initNum * miToKm;
-          break;
-        case "l":
-          result = initNum / galToL;
-          break;
-        case "kg":
-          result = initNum / lbsToKg;
+    const galToL = 3.78541;
+    const lbsToKg = 0.453592;
+    const miToKm = 1.60934;
+    let result;
+    switch (initUnit.toLowerCase()) {
+      case "gal":
+        result = initNum * galToL;
         break;
-        case "km":
-          result = initNum / miToKm;
-          break;
-      }
-  
-      return Number(result).toFixed(5);
-    } else if (!checkNumber(initNum) && !checkUnit(initUnit)) {
-      throw new Error("invalid number and unit");
-    } else if (!checkNumber(initNum)) {
-      throw new Error("invalid number");
-    } else if (!checkUnit(initUnit)) {
-      throw new Error("invalid unit");
+      case "lbs":
+        result = initNum * lbsToKg;
+        break;
+      case "mi":
+        result = initNum * miToKm;
+        break;
+      case "l":
+        result = initNum / galToL;
+        break;
+      case "kg":
+        result = initNum / lbsToKg;
+      break;
+      case "km":
+        result = initNum / miToKm;
+        break;
     }
+  
+    return Number(result).toFixed(5);
   };
   
   this.getString = function(initNum, initUnit, returnNum, returnUnit) {
