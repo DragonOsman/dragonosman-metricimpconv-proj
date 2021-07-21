@@ -1,6 +1,6 @@
 function ConvertHandler() {
   const checkNumber = (number) => {
-    if (!/^\d*(\.\d+)?(\/\d+(\.\d+)?)?$/.test(number)) {
+    if (!/^(\d*(\.\d+)?(\/\d+(\.\d+)?)?)[a-z]/.test(number)) {
       return false;
     }
 
@@ -34,15 +34,15 @@ function ConvertHandler() {
         const numerator = Number(numbers[0]);
         const denominator = Number(numbers[1]);
         return Number(numerator / denominator);
-      } else if (numbers.length > 2) {
-        throw new Error("invalid number");
       }
     }
 
     if (!checkNumber(number) && !checkUnit(unit)) {
       throw new Error("invalid number and unit");
-    } else if (!checkNumber(number)) {
+    } else if (!checkNumber(number) && checkUnit(unit)) {
       throw new Error("invalid number");
+    } else if (checkNumber(number) && !checkUnit(unit)) {
+      throw new Error("invalid unit");
     }
     return Number(number);
   };
@@ -51,10 +51,6 @@ function ConvertHandler() {
     const [number, unit] = input.split(/([a-z]+)/i);
     if (unit === "l" || unit === "L") {
       return "L";
-    }
-
-    if (!checkUnit(unit)) {
-      throw new Error("invalid unit");
     }
 
     return unit.toLowerCase();
