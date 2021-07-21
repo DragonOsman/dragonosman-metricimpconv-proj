@@ -39,9 +39,9 @@ function ConvertHandler() {
       }
     }
 
-    if (!checkNumber(initNum) && !checkUnit(initUnit)) {
+    if (!checkNumber(number) && !checkUnit(unit)) {
       throw new Error("invalid number and unit");
-    } else if (!checkNumber(initNum)) {
+    } else if (!checkNumber(number)) {
       throw new Error("invalid number");
     }
     return Number(number);
